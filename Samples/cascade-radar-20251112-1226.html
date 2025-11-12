@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cascade Radar - 2025-11-12 12:26</title>
+    <style>
+        /* Cascade Brand Typography */
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Inter:wght@300;400;500;600&family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,600;1,300&display=swap');
+        
+        body { font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; margin: 0; padding: 20px; background: var(--cascade-slate); font-size: 16px; line-height: 1.6; color: #333333; }
+        .container { max-width: 680px; margin: 0 auto; background: var(--cascade-white); border-radius: 8px; overflow: hidden; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.06); }
+        
+        /* Brand Color Variables and Root Styles */
+        :root { --cascade-slate: #1C1F26; --cascade-primary: #0077FF; --cascade-cyan: #3AAFA9; --cascade-white: #FFFFFF; --cascade-gray: #E0E0E0; --cascade-light-gray: #F8F9FA; }
+        
+        /* Header with Brand Styling */
+        .header { background: var(--cascade-slate); color: var(--cascade-white); padding: 0; text-align: center; height: 180px; display: flex; align-items: center; justify-content: center; }
+        .generated { font-size: 14px; color: #e0e0e0; margin-top: 16px; opacity: 0.8; }
+        
+        /* Timestamp Section */
+        .timestamp { background: var(--cascade-primary); color: var(--cascade-white); padding: 8px 20px; text-align: center; margin: 0; font-family: 'IBM Plex Sans', monospace; font-size: 14px; font-weight: 500; letter-spacing: 1px; }
+        
+        /* Logo Styling */
+        .logo-container { display: flex; align-items: center; justify-content: center; width: 100%; height: 100%; margin: 0 auto; }
+        .logo-bars svg { display: block; margin: 0 auto; width: 100%; height: 100%; max-width: 100%; max-height: 100%; }
+        
+        /* Pipeline Progression Section */
+        .summary { background: var(--cascade-light-gray); border: 1px solid var(--cascade-gray); padding: 24px; margin: 0; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05); }
+        .summary h2 { font-family: Montserrat, sans-serif; font-weight: 700; font-size: 20px; color: #1c1f26; text-transform: uppercase; letter-spacing: -0.3px; border-bottom: 2px solid #0077ff; padding-bottom: 12px; margin: 0 0 16px 0; }
+        .summary p { margin: 12px 0; font-size: 14px; display: flex; align-items: center; }
+        .pipeline-stage { font-family: Montserrat, sans-serif; font-weight: 600; color: #1c1f26; text-transform: uppercase; font-size: 12px; letter-spacing: 0.5px; min-width: 180px; margin-right: 12px; }
+        .pipeline-value { color: #0077ff; font-weight: 600; }
+        
+        /* Content Area */
+        .content { padding: 40px 24px; background: #ffffff; }
+        .content h2 { font-family: Montserrat, sans-serif; font-weight: 700; font-size: 20px; color: #1c1f26; text-transform: uppercase; letter-spacing: -0.3px; border-bottom: 2px solid #0077ff; padding-bottom: 12px; margin: 24px 0 16px 0; }
+        
+        /* Article Cards */
+        .article { border: 1px solid #e0e0e0; margin: 24px 0; padding: 24px; border-radius: 8px; background: #ffffff; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05); position: relative; }
+        .article h3 { font-family: Montserrat, sans-serif; font-weight: 600; font-size: 18px; line-height: 1.4; color: #1c1f26; margin: 0 60px 16px 0; letter-spacing: -0.3px; }
+        
+        /* Article Metadata */
+        .meta { color: #6b7280; font-size: 14px; margin: 12px 0; font-weight: 500; }
+        .meta strong { color: #1c1f26; }
+        
+        /* Badges */
+        .badge { display: inline-block; background: #3aafa9; color: #ffffff; padding: 4px 10px; border-radius: 12px; font-family: Montserrat, sans-serif; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; margin: 4px 8px 4px 0; }
+        
+        /* Score Tooltip */
+        .score-container { position: absolute; top: 20px; right: 20px; }
+        .score { background: #0077ff; color: #ffffff; padding: 8px 12px; border-radius: 20px; font-family: Montserrat, sans-serif; font-weight: 700; font-size: 14px; cursor: help; transition: background 150ms ease; }
+        .score:hover { background: var(--cascade-cyan); }
+        .tooltip { visibility: hidden; opacity: 0; position: absolute; z-index: 1000; background: #1c1f26; color: #ffffff; text-align: left; padding: 12px 16px; border-radius: 8px; font-size: 12px; font-weight: 500; line-height: 1.4; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); top: 100%; right: 0; margin-top: 8px; min-width: 220px; transition: opacity 200ms ease, visibility 200ms ease; }
+        .tooltip::before { content: ''; position: absolute; bottom: 100%; right: 12px; width: 0; height: 0; border-left: 6px solid transparent; border-right: 6px solid transparent; border-bottom: 6px solid #1c1f26; }
+        .score-container:hover .tooltip { visibility: visible; opacity: 1; }
+        .score-breakdown { margin: 0; }
+        .score-item { display: flex; justify-content: space-between; margin: 4px 0; }
+        .score-label { color: #e0e0e0; }
+        .score-value { color: #0077ff; font-weight: 600; }
+        .score-total { border-top: 1px solid #3a3a3a; padding-top: 8px; margin-top: 8px; font-weight: 700; }
+        
+        /* So What Section */
+        .so-what { background: var(--cascade-white); border-left: 4px solid var(--cascade-primary); padding: 16px 20px; border-radius: 8px; margin: 16px 0; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.06); }
+        .so-what strong { color: var(--cascade-slate); font-family: Montserrat, sans-serif; font-weight: 600; font-size: 14px; text-transform: uppercase; letter-spacing: 0.5px; }
+        
+        /* Logo Styling */
+        .logo-container { display: flex; align-items: center; justify-content: center; margin-bottom: 20px; width: 100%; }
+        .logo-bars svg { display: block; margin: 0 auto; width: 100%; max-width: 100%; height: auto; }
+        
+        /* Links */
+        a { color: #0077ff; text-decoration: none; transition: color 150ms ease; }
+        a:hover { color: var(--cascade-cyan); text-decoration: underline; }
+        a:focus { outline: 2px solid #0077ff; outline-offset: 2px; }
+        
+        /* Footer Styles */
+        .footer { background: var(--cascade-light-gray); border-top: 1px solid var(--cascade-gray); margin-top: 40px; }
+        .note { background: var(--cascade-white); border-left: 4px solid var(--cascade-primary); padding: 16px 20px; font-size: 13px; line-height: 1.5; color: var(--cascade-slate); margin: 0; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.06); }
+        .data-provenance { padding: 20px 24px; font-size: 12px; color: #6b7280; line-height: 1.4; }
+        .data-provenance h3 { font-family: Montserrat, sans-serif; font-weight: 600; font-size: 14px; color: #1c1f26; text-transform: uppercase; letter-spacing: 0.5px; margin: 0 0 12px 0; }
+        .data-provenance p { margin: 4px 0; }
+        .data-provenance strong { color: #1c1f26; }
+        .version { margin-top: 12px; font-style: italic; color: #9ca3af; }
+        
+        /* Meta Insight Section */
+        .meta-insight { background: var(--cascade-light-gray); border-left: 4px solid var(--cascade-primary); padding: 20px 24px; margin: 24px 0; border-radius: 8px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05); }
+        .meta-insight h3 { font-family: Montserrat, sans-serif; font-weight: 600; font-size: 16px; color: var(--cascade-slate); text-transform: uppercase; letter-spacing: 0.5px; margin: 0 0 12px 0; }
+        .meta-insight p { margin: 0; color: var(--cascade-slate); font-size: 15px; line-height: 1.8; font-family: 'Inter', sans-serif; }
+        
+        /* Mobile Responsiveness */
+        @media screen and (max-width: 600px) {
+            body { padding: 10px; }
+            .container { border-radius: 0; }
+            .header { padding: 24px 16px; }
+            .content { padding: 24px 16px; }
+            .article { padding: 16px; margin: 16px 0; }
+            .article h3 { margin-right: 40px; font-size: 16px; }
+            .score { top: 16px; right: 16px; padding: 6px 10px; font-size: 12px; }
+            .summary { padding: 16px; }
+            .pipeline-stage { min-width: 140px; font-size: 11px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo-container">
+                <div class="logo-bars">
+                    <svg width="100%" height="100%" viewBox="0 0 1200 630" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
+                        <path d="M0 0 C396 0 792 0 1200 0 C1200 207.9 1200 415.8 1200 630 C804 630 408 630 0 630 C0 422.1 0 214.2 0 0 Z " fill="#2F3233" transform="translate(0,0)"/>
+                        <path d="M0 0 C4.21240615 3.38823973 7.94854289 6.77257601 8.875 12.3125 C8.97005438 14.50299321 9.00769083 16.69618635 9.01201439 18.88873672 C9.01599213 19.8822958 9.01599213 19.8822958 9.02005023 20.89592677 C9.02773636 23.12515115 9.02830213 25.35432038 9.02890015 27.58355713 C9.0329152 29.19410583 9.0373535 30.80465352 9.0421797 32.4152 C9.05414589 36.84873233 9.05979374 41.28225378 9.06436086 45.71579909 C9.07031663 50.49439314 9.08192639 55.27297418 9.09265137 60.05155945 C9.11717368 71.59470422 9.13180111 83.13785329 9.14471143 94.68101609 C9.14842312 97.94049395 9.15239636 101.19997138 9.1564641 104.45944881 C9.18169742 124.6952071 9.20375306 144.93096606 9.21619225 165.1667366 C9.21912199 169.85383354 9.22208365 174.54093046 9.22509766 179.22802734 C9.22584371 180.39299723 9.22658976 181.55796712 9.22735842 182.75823912 C9.24001726 201.63811683 9.27324785 220.51790048 9.31489949 239.39773419 C9.35729945 258.77535274 9.38088493 278.15292309 9.38611281 297.53058791 C9.38952883 308.41289443 9.40130678 319.29505386 9.43421555 330.17731476 C9.46219037 339.44323264 9.47322658 348.7089733 9.46202008 357.97493014 C9.45682714 362.70306282 9.45976158 367.43082418 9.48448563 372.15890312 C9.50693524 376.48812749 9.50627186 380.8167129 9.48728175 385.14594814 C9.48447573 386.71124521 9.49011376 388.27658522 9.50509469 389.84181312 C9.64408703 405.31093984 9.64408703 405.31093984 3.875 411.3125 C-0.63873124 415.12841562 -4.89387762 415.97194919 -10.76953125 415.6875 C-16.60777589 414.75802822 -20.4813552 410.56954469 -23.83479249 405.97941303 C-26.60732155 400.24847918 -25.94834743 393.64706937 -25.89363098 387.40856934 C-25.90126524 385.77805646 -25.91151001 384.14755409 -25.92413253 382.5170722 C-25.95108862 378.04672614 -25.94068589 373.57713392 -25.92400706 369.10676646 C-25.91248499 364.2818349 -25.93547562 359.45704917 -25.95396423 354.63215637 C-25.98449714 345.18423786 -25.98245001 335.73659538 -25.96851341 326.28864825 C-25.95769652 318.61010559 -25.95822113 310.93164237 -25.96683311 303.25309753 C-25.96804124 302.16022355 -25.96924936 301.06734956 -25.97049409 299.94135818 C-25.97298474 297.72120128 -25.97549573 295.5010444 -25.97802683 293.28088754 C-26.00030807 272.46274302 -25.98503159 251.64475307 -25.95744052 230.82662338 C-25.93472033 212.96390124 -25.94640372 195.10146557 -25.98266602 177.23876953 C-26.02477229 156.49508876 -26.0439118 135.7515856 -26.02764148 115.00786257 C-26.02598182 112.79587589 -26.02435847 110.58388919 -26.02277184 108.37190247 C-26.02198689 107.28356451 -26.02120195 106.19522655 -26.02039323 105.07390866 C-26.01650168 97.40462264 -26.02922404 89.73546728 -26.04850197 82.06620789 C-26.07162199 72.71977667 -26.07001776 63.37374458 -26.03658883 54.02733791 C-26.02017891 49.25857543 -26.01499379 44.49050529 -26.04018784 39.72176552 C-26.06294546 35.35543443 -26.0533379 30.99041045 -26.01801594 26.62417394 C-26.01089594 25.0455542 -26.01555947 23.46682768 -26.03325496 21.88829106 C-26.17084467 8.64112037 -26.17084467 8.64112037 -21.81986523 3.44741058 C-15.3671225 -2.78575903 -8.09647792 -4.37209808 0 0 Z " fill="#118EEC" transform="translate(303.125,113.6875)"/>
+                        <path d="M0 0 C4.1820335 2.71173316 7.24426285 5.86639428 10 10 C10.255301 12.02410573 10.255301 12.02410573 10.26285553 14.39169598 C10.27053782 15.29493499 10.27822011 16.19817399 10.2861352 17.12878388 C10.28440223 18.12234401 10.28266927 19.11590413 10.28088379 20.13957214 C10.28682603 21.19413095 10.29276828 22.24868976 10.29889059 23.3352049 C10.31630284 26.88650621 10.31928428 30.43767299 10.32226562 33.98901367 C10.33151934 36.52817067 10.3415683 39.06732488 10.35235596 41.60647583 C10.37863502 48.51777296 10.39157329 55.42902562 10.40037727 62.34036422 C10.40590211 66.65633559 10.4143769 70.972298 10.42338562 75.28826332 C10.44777336 87.23887539 10.46837041 99.18948027 10.4751358 111.14011669 C10.47557494 111.90511015 10.47601407 112.6701036 10.47646651 113.45827867 C10.47690306 114.22510223 10.47733962 114.99192578 10.4777894 115.78198642 C10.47867633 117.33585879 10.47956946 118.88973115 10.48046875 120.44360352 C10.48091161 121.21437775 10.48135447 121.98515199 10.48181075 122.77928302 C10.48970391 135.2638916 10.52460207 147.74826649 10.57118779 160.23278483 C10.61863523 173.05178843 10.64354048 185.87067484 10.64587164 198.68976766 C10.64770422 205.88667828 10.65918457 213.08328459 10.69551086 220.28011131 C10.72956642 227.0509495 10.73280335 233.82111197 10.71523285 240.59204483 C10.71368988 243.07687869 10.72240704 245.56174334 10.74214935 248.04649925 C10.76753145 251.4401925 10.75586981 254.8318309 10.73498535 258.22550964 C10.75109816 259.20791616 10.76721097 260.19032268 10.78381205 261.20249909 C10.68491387 268.07809375 8.8128087 272.08075072 4 277 C-0.65745051 280.681953 -4.98458042 280.67250856 -10.7578125 280.5546875 C-15.88008153 279.6783475 -18.87316282 277.03780549 -22 273 C-23.72886432 270.04735663 -24.25066633 267.92092958 -24.25447559 264.51090431 C-24.26030779 263.61140765 -24.26613998 262.71191098 -24.27214891 261.78515685 C-24.26836958 260.80092722 -24.26459026 259.81669759 -24.26069641 258.80264282 C-24.26452196 257.75398556 -24.26834751 256.7053283 -24.27228898 255.62489355 C-24.28263438 252.09965065 -24.27862385 248.57457016 -24.2746582 245.04931641 C-24.27900383 242.52647246 -24.28418648 240.00362984 -24.29014587 237.48078918 C-24.30216889 231.33242793 -24.30468525 225.18412686 -24.30234561 219.03575613 C-24.30056332 214.03828127 -24.30231019 209.04081968 -24.30657005 204.04334641 C-24.30716524 203.33235286 -24.30776043 202.62135932 -24.30837366 201.88882052 C-24.3095854 200.44447204 -24.31079953 199.00012357 -24.31201603 197.55577509 C-24.32289572 184.00656065 -24.32072715 170.45737109 -24.31463119 156.90815525 C-24.30946258 144.51286708 -24.3207152 132.11765751 -24.33972941 119.72238488 C-24.35910188 106.99602218 -24.36736479 94.26969666 -24.36360615 81.54331911 C-24.36169309 74.39801026 -24.36419183 67.2527683 -24.37832069 60.10747147 C-24.39147206 53.3884706 -24.38898249 46.66965265 -24.37590981 39.95064354 C-24.37353808 37.48272207 -24.37629994 35.0147896 -24.38453293 32.54688072 C-24.39495142 29.18151095 -24.38693863 25.81667476 -24.3742218 22.45132446 C-24.38159609 21.47155628 -24.38897037 20.49178809 -24.39656812 19.48232996 C-24.3547534 14.2328943 -23.97263099 10.52036129 -21 6 C-14.48499195 -0.23174683 -8.82716625 -2.55840478 0 0 Z " fill="#118FEB" transform="translate(249,180)"/>
+                        <path d="M0 0 C4.12593192 2.87855716 7.06537651 6.00862953 8.6875 10.875 C8.78044712 12.32806713 8.81836648 13.7850149 8.82172108 15.24104786 C8.82617892 16.13855347 8.83063676 17.03605909 8.83522969 17.96076185 C8.83504533 18.94790431 8.83486097 19.93504678 8.83467102 20.95210266 C8.83834771 21.9999055 8.8420244 23.04770833 8.8458125 24.12726277 C8.85686893 27.65556614 8.86069648 31.18384008 8.86450195 34.7121582 C8.87076503 37.23485407 8.87741169 39.757549 8.88441467 42.28024292 C8.90365459 49.86232452 8.91424397 57.44440095 8.92314246 65.02650073 C8.92752566 68.59659349 8.93289233 72.16668477 8.93813133 75.73677635 C8.95514201 87.60332716 8.96963689 99.46987705 8.97688007 111.33643818 C8.97878998 114.415617 8.98071031 117.49479582 8.98266602 120.57397461 C8.98314976 121.33929224 8.9836335 122.10460987 8.9841319 122.89311894 C8.99243491 135.29495198 9.01777709 147.69668866 9.05024669 160.09847961 C9.08330631 172.82932521 9.10132778 185.5601218 9.10452431 198.29101056 C9.10669028 205.43972226 9.11545164 212.58829338 9.14098549 219.73696327 C9.16494389 226.46007921 9.16852513 233.18289814 9.15822411 239.90606308 C9.15772711 242.37560428 9.16409551 244.84515769 9.17778015 247.31466103 C9.19540038 250.68239596 9.18844082 254.04921179 9.17524719 257.41694641 C9.18621644 258.39739672 9.19718568 259.37784702 9.20848733 260.38800794 C9.15465991 266.06708172 8.52151478 269.39066705 4.6875 273.875 C-0.58178852 278.63021159 -4.67276447 279.23442628 -11.5859375 279.15234375 C-16.68204952 278.63397132 -19.22544838 276.14523201 -22.44048977 272.3884201 C-24.99912611 267.58632863 -24.87161271 263.64653717 -24.8271637 258.28527832 C-24.83758199 256.68522784 -24.83758199 256.68522784 -24.84821075 255.05285311 C-24.8665076 251.47838213 -24.8562085 247.90457281 -24.84594727 244.33007812 C-24.85300429 241.76752729 -24.86174839 239.20498062 -24.87205505 236.6424408 C-24.89224194 230.40472618 -24.89357084 224.16725614 -24.88542951 217.92952144 C-24.87912734 212.85961767 -24.88026852 207.7897671 -24.88670158 202.71986389 C-24.88760324 201.99803988 -24.88850489 201.27621588 -24.88943387 200.53251842 C-24.89128509 199.06610499 -24.89314765 197.59969159 -24.89502143 196.13327819 C-24.91159629 182.38563897 -24.90288316 168.63810242 -24.88603585 154.89046937 C-24.87133679 142.31418712 -24.88597063 129.73814373 -24.91480602 117.16189224 C-24.94420034 104.24560549 -24.95517236 91.32942899 -24.94562382 78.41311026 C-24.94460127 76.95211889 -24.94360666 75.49112751 -24.9426403 74.03013611 C-24.94216391 73.31131753 -24.94168752 72.59249895 -24.9411967 71.85189798 C-24.93903273 66.78859768 -24.94883557 61.72540178 -24.96341133 56.66212463 C-24.98275916 49.84613398 -24.97585439 43.03065835 -24.95121193 36.21466255 C-24.94619265 33.71126593 -24.94972253 31.20783562 -24.96236038 28.70446587 C-24.9782327 25.2907025 -24.9633928 21.87841473 -24.94068909 18.46472168 C-24.95252482 17.47075394 -24.96436054 16.4767862 -24.97655493 15.45269823 C-24.91633446 11.00519904 -24.79753588 7.87339773 -21.94120693 4.3303299 C-15.46315182 -1.72046344 -8.32995721 -2.82904207 0 0 Z " fill="#1190EE" transform="translate(356.3125,181.125)"/>
+                        <path d="M0 0 C4.02774155 4.57934439 6.11300029 8.52861762 6.15390015 14.71073914 C6.16250061 15.67934372 6.17110107 16.6479483 6.17996216 17.64590454 C6.18422211 18.70723602 6.18848206 19.7685675 6.19287109 20.86206055 C6.20513733 22.54056343 6.20513733 22.54056343 6.21765137 24.25297546 C6.24250769 27.96421777 6.25902256 31.6754218 6.2734375 35.38671875 C6.27876118 36.65375956 6.28408485 37.92080036 6.28956985 39.22623634 C6.31080006 44.55263955 6.32992928 49.87902937 6.34119225 55.20546246 C6.35741491 62.82613936 6.39055469 70.44630509 6.44759309 78.06678933 C6.4910542 84.07944282 6.50694655 90.09186469 6.51332474 96.10468483 C6.52003982 98.65753631 6.53526838 101.21038029 6.55921555 103.76312828 C6.59084934 107.33946853 6.59090553 110.91452324 6.58349609 114.4909668 C6.59990143 115.54217712 6.61630676 116.59338745 6.63320923 117.67645264 C6.5642004 125.82881012 4.14789462 130.38917971 -1.125 136.4375 C-5.57825703 140.14854753 -11.52123663 139.4244666 -17 139 C-22.28923987 137.23692004 -24.80008936 134.38844888 -28 130 C-28.96851063 127.09446811 -29.13211787 125.22998303 -29.14717102 122.206604 C-29.15432632 121.21972595 -29.16148163 120.2328479 -29.16885376 119.21606445 C-29.17154266 118.13446045 -29.17423157 117.05285645 -29.17700195 115.93847656 C-29.18357315 114.79836121 -29.19014435 113.65824585 -29.19691467 112.48358154 C-29.21665955 108.70259539 -29.22831275 104.92164897 -29.23828125 101.140625 C-29.24235678 99.85027092 -29.2464323 98.55991684 -29.25063133 97.23046112 C-29.26934482 91.10567829 -29.2839096 84.9809154 -29.2922433 78.85610986 C-29.30201076 71.79482514 -29.32831914 64.7338543 -29.36874419 57.67268014 C-29.40258866 51.55003967 -29.41439206 45.42753076 -29.41844749 39.30480194 C-29.42332104 36.70369081 -29.43495671 34.10258321 -29.45348549 31.50153351 C-29.47781136 27.86046827 -29.47692331 24.22022305 -29.4699707 20.57910156 C-29.48278076 19.50559448 -29.49559082 18.4320874 -29.50878906 17.3260498 C-29.45870435 10.12648974 -28.34496488 5.72963584 -23.4375 0.2578125 C-16.16564147 -5.47272819 -7.29049078 -6.10201661 0 0 Z " fill="#118EEB" transform="translate(414,252)"/>
+                        <path d="M0 0 C4.45135465 3.73653858 7.27189953 7.0255062 7.89789391 13.00382137 C7.90124559 13.86896642 7.90459728 14.73411146 7.90805054 15.62547302 C7.91658051 16.62495972 7.92511047 17.62444641 7.93389893 18.65422058 C7.93299255 19.73955582 7.93208618 20.82489105 7.93115234 21.94311523 C7.93786957 23.09488251 7.94458679 24.24664978 7.95150757 25.43331909 C7.97050599 29.24074618 7.97441254 33.04799721 7.9765625 36.85546875 C7.9829884 39.50195895 7.98971661 42.14844844 7.99673462 44.79493713 C8.00951388 50.34222561 8.0125006 55.88946637 8.01123047 61.43676758 C8.01002869 67.84151298 8.03114123 74.2459216 8.0627178 80.65058178 C8.09205277 86.82130136 8.09920579 92.99185966 8.09801102 99.16264534 C8.10037229 101.78411295 8.10922528 104.40558301 8.12467575 107.02700615 C8.14425691 110.69203593 8.13852796 114.35619665 8.12646484 118.02124023 C8.13770386 119.10455124 8.14894287 120.18786224 8.16052246 121.30400085 C8.10951359 127.39848985 7.66688259 130.88599215 3.640625 135.546875 C2.6815625 136.660625 2.6815625 136.660625 1.703125 137.796875 C-2.33633416 141.22429489 -6.08147812 141.96796251 -11.37890625 141.7890625 C-17.32919643 141.0614136 -20.55931387 137.56269764 -24.16015625 133.16796875 C-26.31335495 130.25729298 -26.4875781 128.39992435 -26.49981689 124.82904053 C-26.50552704 123.83367783 -26.51123718 122.83831512 -26.51712036 121.81278992 C-26.51823822 120.71666885 -26.51935608 119.62054779 -26.52050781 118.49121094 C-26.52547272 117.33988174 -26.53043762 116.18855255 -26.53555298 115.00233459 C-26.55020445 111.17863373 -26.55698198 107.35497437 -26.5625 103.53125 C-26.56679708 101.55009939 -26.57109466 99.56894878 -26.5754745 97.58779836 C-26.58729182 92.06497466 -26.59482484 86.54216103 -26.5982697 81.01932597 C-26.60274701 73.88053862 -26.62027802 66.74194307 -26.6492703 59.60321403 C-26.67090646 54.08380103 -26.68097506 48.56444191 -26.68231082 43.04498696 C-26.68335777 39.74938571 -26.69069123 36.4540055 -26.70713043 33.15843964 C-26.72417318 29.47885093 -26.72231453 25.79972928 -26.71582031 22.12011719 C-26.7250351 21.03209305 -26.73424988 19.94406891 -26.7437439 18.82307434 C-26.70797753 12.35818977 -26.18539208 7.67450875 -21.67578125 2.68359375 C-21.09699219 2.20535156 -20.51820313 1.72710937 -19.921875 1.234375 C-19.34566406 0.74324219 -18.76945313 0.25210938 -18.17578125 -0.25390625 C-12.85577381 -3.76625525 -5.30535661 -3.26753751 0 0 Z " fill="#128FEC" transform="translate(197.359375,250.453125)"/>
+                        <text x="500" y="400" font-family="Montserrat, sans-serif" font-size="120" font-weight="700" letter-spacing="8" fill="#F9F7F6">CASCADE</text>
+                        <text x="500" y="450" font-family="IBM Plex Sans, sans-serif" font-size="32" font-weight="300" font-style="italic" letter-spacing="4" fill="#0077FF" font-variant="small-caps">SIGNAL OVER SPECTACLE</text>
+                    </svg>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Timestamp -->
+        <div class="timestamp">
+            <p><strong>Cascade Radar Report</strong> • Generated: 2025-11-12 12:26:28</p>
+        </div>
+        <div class="summary">
+            <h2>Pipeline Progression</h2>
+            <p><span class="pipeline-stage">Initially Fetched:</span> <span class="pipeline-value">21</span></p>
+            <p><span class="pipeline-stage">Successfully Parsed:</span> <span class="pipeline-value">21</span></p>
+            <p><span class="pipeline-stage">Unique After Deduplication:</span> <span class="pipeline-value">12</span></p>
+            <p><span class="pipeline-stage">Qualifying Articles (Score ≥ 25):</span> <span class="pipeline-value">9</span></p>
+            <p><span class="pipeline-stage">Selected for Presentation:</span> <span class="pipeline-value">9</span></p>
+        </div>
+        <div class="meta-insight">
+            <h3>Week's Pattern</h3>
+            <p>The dominant theme across this Radar is the increasing influence and integration of AI in various sectors, from tech and oil to job markets and security systems. This convergence suggests a growing reliance on AI for efficiency, profitability, and innovation. Secondary themes include potential disruptions in infrastructure due to government actions and shifts in macroeconomic trends, such as delayed home ownership and proposed tariffs. For decision-makers, these trends signal the need to consider the role of AI in their strategic planning, anticipate potential disruptions in their operations, and adapt to changing economic conditions.</p>
+        </div>
+        <div class="content">
+            <h2>Selected Articles</h2>
+            <div class="article">
+                <div class="score-container">
+                    <div class="score">80</div>
+                    <div class="tooltip">
+                        <div class="score-breakdown">
+                            <div class="score-item"><span class="score-label">Relevance:</span> <span class="score-value">90</span></div>
+                            <div class="score-item"><span class="score-label">Depth:</span> <span class="score-value">70</span></div>
+                            <div class="score-item"><span class="score-label">Actionability:</span> <span class="score-value">70</span></div>
+                            <div class="score-item"><span class="score-label">Signal Quality:</span> <span class="score-value">90</span></div>
+                            <div class="score-item"><span class="score-label">Narrative Fit:</span> <span class="score-value">80</span></div>
+                            <div class="score-item score-total"><span class="score-label">Overall:</span> <span class="score-value">80</span></div>
+                        </div>
+                    </div>
+                </div>
+                <h3>#1. AMD&#x27;s Lisa Su sees 35% annual sales growth driven by &#x27;insatiable&#x27; AI demand</h3>
+                <div class="meta">
+                    <strong>Source:</strong> CNBC | 
+                    <strong>Domain:</strong> www.cnbc.com | 
+                    <strong>Published:</strong> 2025-11-11 12:21
+                </div>
+                <div class="meta">
+                    <span class="badge">ai</span>
+                    <span class="badge">center</span>
+                </div>
+                <div class="so-what">
+                    <strong>So What:</strong> AMD&#x27;s CEO predicts a 35% annual sales growth over the next 3-5 years, driven by AI chip demand. This could be a significant opportunity for builders and executives to invest in or collaborate with AMD.
+                </div>
+                <p><strong>URL:</strong> <a href="https://www.cnbc.com/2025/11/11/amd-lisa-su-growth-ai-analyst-day.html" target="_blank">https://www.cnbc.com/2025/11/11/amd-lisa-su-growth-ai-analyst-day.html</a></p>
+            </div>
+            <div class="article">
+                <div class="score-container">
+                    <div class="score">78</div>
+                    <div class="tooltip">
+                        <div class="score-breakdown">
+                            <div class="score-item"><span class="score-label">Relevance:</span> <span class="score-value">90</span></div>
+                            <div class="score-item"><span class="score-label">Depth:</span> <span class="score-value">70</span></div>
+                            <div class="score-item"><span class="score-label">Actionability:</span> <span class="score-value">70</span></div>
+                            <div class="score-item"><span class="score-label">Signal Quality:</span> <span class="score-value">80</span></div>
+                            <div class="score-item"><span class="score-label">Narrative Fit:</span> <span class="score-value">80</span></div>
+                            <div class="score-item score-total"><span class="score-label">Overall:</span> <span class="score-value">78</span></div>
+                        </div>
+                    </div>
+                </div>
+                <h3>#2. Big Oil Is Pairing Up With Big Tech For An Opportunity Worth Billions</h3>
+                <div class="meta">
+                    <strong>Source:</strong> Forbes | 
+                    <strong>Domain:</strong> www.forbes.com | 
+                    <strong>Published:</strong> 2025-11-11 19:18
+                </div>
+                <div class="meta">
+                    <span class="badge">ai</span>
+                    <span class="badge">center</span>
+                </div>
+                <div class="so-what">
+                    <strong>So What:</strong> Big Oil is increasingly leveraging technology to improve efficiency and profitability, presenting a multi-billion dollar opportunity. Executives should consider investing in or partnering with tech firms to capitalize on this trend.
+                </div>
+                <p><strong>URL:</strong> <a href="https://www.forbes.com/sites/gauravsharma/2025/11/11/big-oil-is-pairing-up-with-big-tech-for-an-opportunity-worth-billions/" target="_blank">https://www.forbes.com/sites/gauravsharma/2025/11/11/big-oil-is-pairing-up-with-big-tech-for-an-opportunity-worth-billions/</a></p>
+            </div>
+            <div class="article">
+                <div class="score-container">
+                    <div class="score">74</div>
+                    <div class="tooltip">
+                        <div class="score-breakdown">
+                            <div class="score-item"><span class="score-label">Relevance:</span> <span class="score-value">80</span></div>
+                            <div class="score-item"><span class="score-label">Depth:</span> <span class="score-value">70</span></div>
+                            <div class="score-item"><span class="score-label">Actionability:</span> <span class="score-value">70</span></div>
+                            <div class="score-item"><span class="score-label">Signal Quality:</span> <span class="score-value">80</span></div>
+                            <div class="score-item"><span class="score-label">Narrative Fit:</span> <span class="score-value">70</span></div>
+                            <div class="score-item score-total"><span class="score-label">Overall:</span> <span class="score-value">74</span></div>
+                        </div>
+                    </div>
+                </div>
+                <h3>#3. The new resilience: automating to innovate SAP&#x27;s Jan Gilg on turning unprecedented uncertainty into unlimited opportunity</h3>
+                <div class="meta">
+                    <strong>Source:</strong> Business Insider | 
+                    <strong>Domain:</strong> www.businessinsider.com | 
+                    <strong>Published:</strong> 2025-11-11 12:22
+                </div>
+                <div class="meta">
+                    <span class="badge">ai</span>
+                    <span class="badge">center</span>
+                </div>
+                <div class="so-what">
+                    <strong>So What:</strong> SAP&#x27;s Jan Gilg suggests focusing on automating standard processes that don&#x27;t create value and innovating in areas that do. This approach can help businesses thrive in uncertain economic climates and technology landscapes.
+                </div>
+                <p><strong>URL:</strong> <a href="https://www.businessinsider.com/sc/the-new-resilience-automating-to-innovate" target="_blank">https://www.businessinsider.com/sc/the-new-resilience-automating-to-innovate</a></p>
+            </div>
+            <div class="article">
+                <div class="score-container">
+                    <div class="score">72</div>
+                    <div class="tooltip">
+                        <div class="score-breakdown">
+                            <div class="score-item"><span class="score-label">Relevance:</span> <span class="score-value">70</span></div>
+                            <div class="score-item"><span class="score-label">Depth:</span> <span class="score-value">60</span></div>
+                            <div class="score-item"><span class="score-label">Actionability:</span> <span class="score-value">70</span></div>
+                            <div class="score-item"><span class="score-label">Signal Quality:</span> <span class="score-value">90</span></div>
+                            <div class="score-item"><span class="score-label">Narrative Fit:</span> <span class="score-value">70</span></div>
+                            <div class="score-item score-total"><span class="score-label">Overall:</span> <span class="score-value">72</span></div>
+                        </div>
+                    </div>
+                </div>
+                <h3>#4. 1Password can now save passkeys directly in Windows 11 - here&#x27;s how</h3>
+                <div class="meta">
+                    <strong>Source:</strong> ZDNet | 
+                    <strong>Domain:</strong> www.zdnet.com | 
+                    <strong>Published:</strong> 2025-11-11 19:00
+                </div>
+                <div class="meta">
+                    <span class="badge">ai</span>
+                    <span class="badge">center</span>
+                </div>
+                <div class="so-what">
+                    <strong>So What:</strong> 1Password now integrates with Windows 11, allowing users to save passkeys directly in the system. This could streamline the user experience and enhance security, potentially influencing the design of similar systems.
+                </div>
+                <p><strong>URL:</strong> <a href="https://www.zdnet.com/article/1password-can-now-save-passkeys-directly-in-windows-11-heres-how/" target="_blank">https://www.zdnet.com/article/1password-can-now-save-passkeys-directly-in-windows-11-heres-how/</a></p>
+            </div>
+            <div class="article">
+                <div class="score-container">
+                    <div class="score">72</div>
+                    <div class="tooltip">
+                        <div class="score-breakdown">
+                            <div class="score-item"><span class="score-label">Relevance:</span> <span class="score-value">70</span></div>
+                            <div class="score-item"><span class="score-label">Depth:</span> <span class="score-value">60</span></div>
+                            <div class="score-item"><span class="score-label">Actionability:</span> <span class="score-value">70</span></div>
+                            <div class="score-item"><span class="score-label">Signal Quality:</span> <span class="score-value">90</span></div>
+                            <div class="score-item"><span class="score-label">Narrative Fit:</span> <span class="score-value">70</span></div>
+                            <div class="score-item score-total"><span class="score-label">Overall:</span> <span class="score-value">72</span></div>
+                        </div>
+                    </div>
+                </div>
+                <h3>#5. Our national flightmare isn&#x27;t over yet</h3>
+                <div class="meta">
+                    <strong>Source:</strong> Business Insider | 
+                    <strong>Domain:</strong> www.businessinsider.com | 
+                    <strong>Published:</strong> 2025-11-11 12:05
+                </div>
+                <div class="meta">
+                    <span class="badge">infra</span>
+                    <span class="badge">center</span>
+                </div>
+                <div class="so-what">
+                    <strong>So What:</strong> The US government shutdown has disrupted flight schedules, with a return to normalcy expected to take 7-14 days post-reopening. Executives in travel, logistics, and related sectors should anticipate continued disruptions and plan accordingly.
+                </div>
+                <p><strong>URL:</strong> <a href="https://www.businessinsider.com/why-flight-delays-could-persist-after-shutdown-ends-2025-11" target="_blank">https://www.businessinsider.com/why-flight-delays-could-persist-after-shutdown-ends-2025-11</a></p>
+            </div>
+            <div class="article">
+                <div class="score-container">
+                    <div class="score">70</div>
+                    <div class="tooltip">
+                        <div class="score-breakdown">
+                            <div class="score-item"><span class="score-label">Relevance:</span> <span class="score-value">80</span></div>
+                            <div class="score-item"><span class="score-label">Depth:</span> <span class="score-value">70</span></div>
+                            <div class="score-item"><span class="score-label">Actionability:</span> <span class="score-value">60</span></div>
+                            <div class="score-item"><span class="score-label">Signal Quality:</span> <span class="score-value">70</span></div>
+                            <div class="score-item"><span class="score-label">Narrative Fit:</span> <span class="score-value">70</span></div>
+                            <div class="score-item score-total"><span class="score-label">Overall:</span> <span class="score-value">70</span></div>
+                        </div>
+                    </div>
+                </div>
+                <h3>#6. OpenAI says it&#x27;s working toward catastrophe or utopia - just not sure which</h3>
+                <div class="meta">
+                    <strong>Source:</strong> ZDNet | 
+                    <strong>Domain:</strong> www.zdnet.com | 
+                    <strong>Published:</strong> 2025-11-11 19:08
+                </div>
+                <div class="meta">
+                    <span class="badge">ai</span>
+                    <span class="badge">center</span>
+                </div>
+                <div class="so-what">
+                    <strong>So What:</strong> OpenAI is developing superintelligent AI, which could cause major social disruptions but ultimately improve human well-being. Businesses should prepare for potential economic transitions and changes in the job market.
+                </div>
+                <p><strong>URL:</strong> <a href="https://www.zdnet.com/article/openai-says-its-working-toward-catastrophe-or-utopia-just-not-sure-which/" target="_blank">https://www.zdnet.com/article/openai-says-its-working-toward-catastrophe-or-utopia-just-not-sure-which/</a></p>
+            </div>
+            <div class="article">
+                <div class="score-container">
+                    <div class="score">70</div>
+                    <div class="tooltip">
+                        <div class="score-breakdown">
+                            <div class="score-item"><span class="score-label">Relevance:</span> <span class="score-value">70</span></div>
+                            <div class="score-item"><span class="score-label">Depth:</span> <span class="score-value">60</span></div>
+                            <div class="score-item"><span class="score-label">Actionability:</span> <span class="score-value">70</span></div>
+                            <div class="score-item"><span class="score-label">Signal Quality:</span> <span class="score-value">80</span></div>
+                            <div class="score-item"><span class="score-label">Narrative Fit:</span> <span class="score-value">70</span></div>
+                            <div class="score-item score-total"><span class="score-label">Overall:</span> <span class="score-value">70</span></div>
+                        </div>
+                    </div>
+                </div>
+                <h3>#7. Mark Cuban: The job-hunting advice I give my own kids in the age of AI—it&#x27;ll make their careers &#x27;easier&#x27; and more successful</h3>
+                <div class="meta">
+                    <strong>Source:</strong> CNBC | 
+                    <strong>Domain:</strong> www.cnbc.com | 
+                    <strong>Published:</strong> 2025-11-11 12:07
+                </div>
+                <div class="meta">
+                    <span class="badge">ai</span>
+                    <span class="badge">center</span>
+                </div>
+                <div class="so-what">
+                    <strong>So What:</strong> Mark Cuban advises job seekers to prioritize working for smaller companies where their AI skills can have a more immediate impact. This could influence hiring trends and the distribution of AI talent.
+                </div>
+                <p><strong>URL:</strong> <a href="https://www.cnbc.com/2025/11/11/mark-cuban-job-hunting-advice-i-give-my-kids-in-age-of-ai.html" target="_blank">https://www.cnbc.com/2025/11/11/mark-cuban-job-hunting-advice-i-give-my-kids-in-age-of-ai.html</a></p>
+            </div>
+            <div class="article">
+                <div class="score-container">
+                    <div class="score">68</div>
+                    <div class="tooltip">
+                        <div class="score-breakdown">
+                            <div class="score-item"><span class="score-label">Relevance:</span> <span class="score-value">70</span></div>
+                            <div class="score-item"><span class="score-label">Depth:</span> <span class="score-value">60</span></div>
+                            <div class="score-item"><span class="score-label">Actionability:</span> <span class="score-value">60</span></div>
+                            <div class="score-item"><span class="score-label">Signal Quality:</span> <span class="score-value">80</span></div>
+                            <div class="score-item"><span class="score-label">Narrative Fit:</span> <span class="score-value">70</span></div>
+                            <div class="score-item score-total"><span class="score-label">Overall:</span> <span class="score-value">68</span></div>
+                        </div>
+                    </div>
+                </div>
+                <h3>#8. Are you 40 and buying your first home? Welcome to the club</h3>
+                <div class="meta">
+                    <strong>Source:</strong> NBC News | 
+                    <strong>Domain:</strong> www.nbcnews.com | 
+                    <strong>Published:</strong> 2025-11-11 12:04
+                </div>
+                <div class="meta">
+                    <span class="badge">macro</span>
+                    <span class="badge">center</span>
+                </div>
+                <div class="so-what">
+                    <strong>So What:</strong> The median age for first-time homebuyers has hit 40, indicating a delay in home ownership due to factors such as high interest rates, rising home prices, and stagnant salaries. This trend could impact the housing market, financial institutions, and policy decisions related to housing affordability.
+                </div>
+                <p><strong>URL:</strong> <a href="https://www.nbcnews.com/business/real-estate/homebuyer-affordability-problems-high-prices-rcna242691" target="_blank">https://www.nbcnews.com/business/real-estate/homebuyer-affordability-problems-high-prices-rcna242691</a></p>
+            </div>
+            <div class="article">
+                <div class="score-container">
+                    <div class="score">68</div>
+                    <div class="tooltip">
+                        <div class="score-breakdown">
+                            <div class="score-item"><span class="score-label">Relevance:</span> <span class="score-value">70</span></div>
+                            <div class="score-item"><span class="score-label">Depth:</span> <span class="score-value">60</span></div>
+                            <div class="score-item"><span class="score-label">Actionability:</span> <span class="score-value">60</span></div>
+                            <div class="score-item"><span class="score-label">Signal Quality:</span> <span class="score-value">80</span></div>
+                            <div class="score-item"><span class="score-label">Narrative Fit:</span> <span class="score-value">70</span></div>
+                            <div class="score-item score-total"><span class="score-label">Overall:</span> <span class="score-value">68</span></div>
+                        </div>
+                    </div>
+                </div>
+                <h3>#9. Italian pasta exports to the U.S. could be &#x27;virtually wiped out&#x27; by proposed 107% tariffs</h3>
+                <div class="meta">
+                    <strong>Source:</strong> NBC News | 
+                    <strong>Domain:</strong> www.nbcnews.com | 
+                    <strong>Published:</strong> 2025-11-11 12:04
+                </div>
+                <div class="meta">
+                    <span class="badge">policy</span>
+                    <span class="badge">center</span>
+                </div>
+                <div class="so-what">
+                    <strong>So What:</strong> Proposed 107% tariffs on Italian pasta could double the cost for US consumers and potentially wipe out Italian pasta exports to the US. This could impact supply chains and the food industry, and businesses should prepare for potential price increases or shortages.
+                </div>
+                <p><strong>URL:</strong> <a href="https://www.nbcnews.com/business/business-news/italian-pasta-tariffs-trump-rcna243264" target="_blank">https://www.nbcnews.com/business/business-news/italian-pasta-tariffs-trump-rcna243264</a></p>
+            </div>
+        <!-- Footer with Note and Data Provenance -->
+        <div class="footer">
+            <div class="note">
+                <strong>Note:</strong> Cascade briefs contain AI-assisted interpretations and scenario projections derived from reputable reporting and public data. Figures labeled "Cascade Projection" are indicative models intended to support strategic planning, not definitive forecasts.
+            </div>
+            
+            <div class="data-provenance">
+                <h3>Data Provenance</h3>
+                <p><strong>Source:</strong> newsapi.org</p>
+                <p><strong>Collected:</strong> Nov 12, 2025 at 12:26 PM UTC | <strong>Analyzed:</strong> Nov 12, 2025 at 12:27 PM UTC</p>
+                <p><strong>Topics:</strong> technology, business</p>
+                <p><strong>Model:</strong> gpt-4 | <strong>Prompt:</strong> triage-prompt.txt</p>
+                <p class="version">Cascade v1.0.0</p>
+            </div>
+        </div>
+        </div>
+    </div>
+</body>
+</html>
